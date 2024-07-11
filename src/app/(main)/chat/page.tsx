@@ -70,7 +70,7 @@ export default function Chat() {
                         } md:translate-x-0 transition-transform duration-300 ease-in-out`}
                 >
                     <ul className="flex flex-col text-center text-lg gap-5 w-full">
-                        {["voice-bot", "second", "third", "fourth"].map((bot) => (
+                        {["first", "second", "third", "fourth"].map((bot) => (
                             <button
                                 key={bot}
                                 value={`/chat/${bot}`}
@@ -85,7 +85,7 @@ export default function Chat() {
                 </div>
 
                 <main className={`flex-grow flex justify-center items-center bg-black p-5 overflow-y-auto ${isSidebarOpen ? "" : "ml-0"} md:ml-0`}>
-                    {isLoading ? <GlobalLoader /> : <Conversation />}
+                    {isLoading ? <GlobalLoader /> : <Conversation botNumber={"first"}/>}
                 </main>
             </div>
         </div>

@@ -33,10 +33,36 @@ import { useAudioStore } from "../../context/AudioStore";
  * Conversation element that contains the conversational AI app.
  * @returns {JSX.Element}
  */
-export default function Conversation(): JSX.Element {
+export default function Conversation(props: { botNumber: string }): JSX.Element {
   /**
    * Custom context providers
    */
+
+  const selectedBot = (props.botNumber).toUpperCase();
+
+  let speakApi;
+  switch (selectedBot) {
+    case "FIRST":
+      speakApi = process.env.NEXT_PUBLIC_FIRST
+      break;
+
+    case "SECOND":
+      speakApi = process.env.NEXT_PUBLIC_SECOND
+      break;
+
+    case "THIRD":
+      speakApi = process.env.NEXT_PUBLIC_THIRD
+      break;
+
+    case "FOUR":
+      speakApi = process.env.NEXT_PUBLIC_FOUR
+      break;
+
+    default:
+      speakApi = undefined
+      break;
+  }
+
   const { ttsOptions, connection, connectionReady } = useDeepgram();
   const { addAudio } = useAudioStore();
   const { player, stop: stopAudio, play: startAudio } = useNowPlaying();
@@ -78,7 +104,7 @@ export default function Conversation(): JSX.Element {
       const start = Date.now();
       const model = ttsOptions?.model ?? "aura-asteria-en";
 
-      const res = await fetch(`/api/speak?model=${model}`, {
+      const res = await fetch(`/api/speak/${speakApi}/?model=${model}`, {
         cache: "no-store",
         method: "POST",
         body: JSON.stringify(message),

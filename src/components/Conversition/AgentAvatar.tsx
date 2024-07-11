@@ -4,6 +4,7 @@ import { Message } from "ai/react";
 import { useMessageData } from "../../context/MessageMetadata";
 import { useAudioStore } from "../../context/AudioStore";
 import { voiceMap } from "../../context/Deepgram";
+import { UserAvatar } from "./UserAvatar";
 
 export const AgentAvatar = ({
   message,
@@ -20,11 +21,15 @@ export const AgentAvatar = ({
 
   if (foundAudio?.model) {
     
-    return <Avatar src={voiceMap(foundAudio?.model).avatar} />;
+    return  <div className="self-end md:self-start h-8 w-8 text-white shrink-0 pt-1 mt-1 rounded-full bg-black border border-zinc-300 overflow-hidden">
+    <UserAvatar />
+  </div>;
   }
 
   if (foundData?.ttsModel) {
-    return <Avatar src={voiceMap(foundData?.ttsModel).avatar} />;
+    return  <div className="self-end md:self-start h-8 w-8 text-white shrink-0 pt-1 mt-1 rounded-full bg-black border border-zinc-300 overflow-hidden">
+    <UserAvatar />
+  </div>;
   }
 
   return <DgSvg />;

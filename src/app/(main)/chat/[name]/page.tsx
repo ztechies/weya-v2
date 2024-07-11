@@ -2,9 +2,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import Conversation from "../../../../components/Conversition/Conversition";
 import { XIcon } from '@/components/icons/XIcon';
-import BotThree from '@/components/Bots/BotThree';
-import BotTwo from '@/components/Bots/BotTwo';
-import BotFour from '@/components/Bots/BotFour';
 import { usePathname, useRouter } from 'next/navigation';
 import GlobalLoader from '@/components/Loaders/GlobalLoader';
 import { isAuthenticated } from '@/app/lib/Auth';
@@ -21,23 +18,24 @@ const Bot: FC<BotProps> = ({ params }) => {
     const router = useRouter();
     const currentPath = usePathname();
 
+    const selectedBot = currentPath.split('/');
     useEffect(() => {
         (async () => {
             const res = await isAuthenticated();
             if (!res) {
                 router.push('/login');
             }
-        })()
-    }, []);
+        })();
+    }, [router]);
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
-    const componentMap: Record<string, FC | (() => JSX.Element)> = {
-        "voice-bot": Conversation,
-        "second": BotTwo,
-        "third": BotThree,
-        "fourth": BotFour,
+    const componentMap: Record<string, FC | ((props: { botNumber: string }) => JSX.Element)> = {
+        "first": Conversation,
+        "second": Conversation,
+        "third": Conversation,
+        "fourth": Conversation,
     };
 
     const ComponentToRender = componentMap[params.name] || (() => <div>Bot not found</div>);
@@ -90,8 +88,8 @@ const Bot: FC<BotProps> = ({ params }) => {
                         } md:translate-x-0 transition-transform duration-300 ease-in-out`}
                     style={{ minWidth: isSidebarOpen ? "16rem" : "4rem" }} // Adjust the minWidth based on your design
                 >
-                    <ul className="flex flex-col text-center text-lg gap-5 w-full">
-                        {["voice-bot", "second", "third", "fourth"].map((bot) => (
+                    <ul className="flex flex-col text-center text-lg gap-5 w-full flex-wrap">
+                        {["first", "second", "third", "fourth"].map((bot) => (
                             <button
                                 key={bot}
                                 value={`/chat/${bot}`}
@@ -106,8 +104,8 @@ const Bot: FC<BotProps> = ({ params }) => {
                 </div>
 
                 {/* Main Content */}
-                <main className={`flex-grow flex justify-center items-center bg-black p-5 overflow-y-auto ${isSidebarOpen ? "" : "ml-0"} md:ml-0`}>
-                    {isLoading ? <GlobalLoader /> : <ComponentToRender />}
+                <main className={`flex-grow flex justify-center items-center bg-black p-5 overflow-y-auto ${isSidebarOpen ? "md:ml-64" : "ml-0"} transition-all duration-300`}>
+                    {isLoading ? <GlobalLoader /> : <ComponentToRender botNumber={selectedBot[2]} />}
                 </main>
             </div>
         </div>
