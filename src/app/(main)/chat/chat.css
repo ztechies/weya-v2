@@ -1,0 +1,64 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* justify-content: flex-end; */
+    width: 70vw;
+    margin-left: 30vw;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .chat-history {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .chat-message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+  }
+  
+  .chat-message.user {
+    background-color: #e1ffc7;
+    align-self: flex-end;
+  }
+  
+  .chat-message.bot {
+    background-color: #f1f0f0;
+    align-self: flex-start;
+  }
+  
+  .chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+
+  }
+  
+  .chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    color: black;
+  }
+  
+  .chat-input button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .chat-input button:hover {
+    background-color: #0056b3;
+  }
+  
